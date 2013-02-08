@@ -167,29 +167,29 @@ cc.generateTintImage = function (texture, tintedImgCache, color, rect, renderCan
         selColor = color;
     }
 
+    var w = rect.size.width;
+    var h = rect.size.height;
     var buff = renderCanvas;
+    var ctx;
 
     // Create a new buffer if required
     if (!buff) {
         buff = document.createElement("canvas");
-        buff.width = rect.size.width;
-        buff.height = rect.size.height;
+        buff.width = w;
+        buff.height = h;
+        ctx = buff.getContext("2d");
 
     // Unless overdraw is active, resize and clear the renderCanvas
     } else if (!overdraw) {
-        buff.width = rect.size.width;
-        buff.height = rect.size.height;
+        ctx = buff.getContext("2d");
+        ctx.clearRect(0, 0, w, h);
     }
 
-    var ctx = buff.getContext("2d");
     ctx.save();
     ctx.globalCompositeOperation = 'lighter';
 
-
     // Make sure to keep the renderCanvas alpha in mind in case of overdraw
     var a = ctx.globalAlpha;
-    var w = rect.size.width;
-    var h = rect.size.height;
     if (selColor.r > 0) {
         ctx.globalAlpha = selColor.r * a;
         ctx.drawImage(tintedImgCache[0], rect.origin.x, rect.origin.y, w, h, 0, 0, w, h);

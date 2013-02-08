@@ -511,11 +511,12 @@ cc.ParticleSystemQuad = cc.ParticleSystem.extend(/** @lends cc.ParticleSystemQua
 
                 if (particle.isChangeColor) {
                     var cacheTextureForColor = cc.TextureCache.getInstance().getTextureColors(drawTexture);
-                    if (cacheTextureForColor)
-                        cc.generateTintImage(drawTexture, cacheTextureForColor, particle.color, this._pointRect, context.canvas, true);
-                } else {
-                    context.drawImage(drawTexture);
+                    if (cacheTextureForColor) {
+                        cc.generateTintImage(drawTexture, cacheTextureForColor, particle.color, this._pointRect, drawTexture.canvas);
+                    }
                 }
+
+                context.drawImage(drawTexture, 0, 0);
 
                 context.restore();
             } else {
