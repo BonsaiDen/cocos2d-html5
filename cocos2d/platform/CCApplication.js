@@ -253,8 +253,11 @@ cc._isContextMenuEnable = false;
 cc.setContextMenuEnable = function (enabled) {
     cc._isContextMenuEnable = enabled;
     if (!cc._isContextMenuEnable) {
-        cc.canvas.oncontextmenu = function () {
+        cc.canvas.oncontextmenu = function (event) {
+            event = event || window.event;
             event.returnValue = false;
+            event.preventDefault();
+            return false;
         };
     } else {
         cc.canvas.oncontextmenu = function () {
